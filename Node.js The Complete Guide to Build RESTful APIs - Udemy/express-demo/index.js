@@ -15,7 +15,11 @@ app.use(express.urlencoded({
 app.use(logger);
 app.use(auth);
 app.use(helmet());
-app.use(morgan('tiny'));
+
+if (app.get('env') === 'development') {
+    app.use(morgan('tiny'));
+    console.log('morgan enabled');
+}
 
 const courses = [{
         id: 1,
