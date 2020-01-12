@@ -1,6 +1,7 @@
-const Joi = require('joi');
+const config = require('config');
 const express = require('express');
 const helmet = require('helmet');
+const Joi = require('joi');
 const morgan = require('morgan');
 const logger = require('./middleware/logger');
 const auth = require('./middleware/auth');
@@ -20,6 +21,10 @@ if (app.get('env') === 'development') {
     app.use(morgan('tiny'));
     console.log('morgan enabled');
 }
+
+console.log(`name: ${config.get('name')}`)
+console.log(`server: ${config.get('mail.host')}`)
+console.log(`pass: ${config.get('mail.password')}`)
 
 const courses = [{
         id: 1,
