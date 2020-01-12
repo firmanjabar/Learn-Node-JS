@@ -1,8 +1,13 @@
 const Joi = require('joi');
 const express = require('express');
+const logger = require('./middleware/logger');
+const auth = require('./middleware/auth');
 const app = express();
 
 app.use(express.json());
+
+app.use(logger);
+app.use(auth);
 
 const courses = [{
         id: 1,
@@ -73,9 +78,6 @@ app.delete('/api/courses/:id', (req, res) => {
     res.send(courses);
 });
 
-const port = process.env.PORT || 3000;
-app.listen(port, () => console.log(`Listening on Port ${port}`));
-
 function validateCourse(course) {
     const schema = {
         name: Joi.string().min(3).required()
@@ -83,3 +85,6 @@ function validateCourse(course) {
 
     return Joi.validate(course, schema);
 }
+
+const port = process.env.PORT || 3000;
+app.listen(port, () => console.log(`Listening on Port ${port}`));
