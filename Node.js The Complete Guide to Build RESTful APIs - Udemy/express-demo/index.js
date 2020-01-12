@@ -1,5 +1,7 @@
 const Joi = require('joi');
 const express = require('express');
+const helmet = require('helmet');
+const morgan = require('morgan');
 const logger = require('./middleware/logger');
 const auth = require('./middleware/auth');
 const app = express();
@@ -12,6 +14,8 @@ app.use(express.urlencoded({
 
 app.use(logger);
 app.use(auth);
+app.use(helmet());
+app.use(morgan('tiny'));
 
 const courses = [{
         id: 1,
