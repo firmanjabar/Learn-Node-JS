@@ -9,6 +9,9 @@ const logger = require('./middleware/logger');
 const auth = require('./middleware/auth');
 const app = express();
 
+app.set('view engine', 'pug');
+app.set('views', './views'); //default
+
 app.use(express.json());
 app.use(express.static('public'));
 app.use(express.urlencoded({
@@ -52,7 +55,10 @@ const courses = [{
 ];
 
 app.get('/', (req, res) => {
-    res.send('<h1>Hello Firman Abdul Jabar</h1>');
+    res.render('index', {
+        title: 'My Express App',
+        message: 'Hello from server using pug'
+    });
 });
 
 app.get('/api/courses', (req, res) => {
