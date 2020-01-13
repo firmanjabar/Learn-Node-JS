@@ -16,26 +16,32 @@ function displayCommits(commit) {
     console.log('Commits:', commit);
 }
 
-function getUser(id, callback) {
-    setTimeout(() => {
-        console.log('get data from database');
-        callback({
-            id: id,
-            username: 'firman'
-        });
-    }, 2000);
+function getUser(id) {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            console.log('get data from database');
+            resolve({
+                id: id,
+                username: 'firman'
+            });
+        }, 2000);
+    });
 }
 
-function getRepo(username, callback) {
-    setTimeout(() => {
-        console.log(`get repositories from: ${username}`);
-        callback(['Repo1', 'Repo2', 'Repo3']);
-    }, 2000);
+function getRepo(username) {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            console.log(`get repositories from: ${username}`);
+            resolve(['Repo1', 'Repo2', 'Repo3']);
+        }, 2000);
+    });
 }
 
-function getCommits(repo, callback) {
-    setTimeout(() => {
-        console.log(`get commit from: ${repo[0]}`);
-        callback(['Commit1', 'Commit2', 'Commit3']);
-    }, 2000);
+function getCommits(repo) {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            console.log(`get commit from: ${repo[0]}`);
+            resolve(['Commit1', 'Commit2', 'Commit3']);
+        }, 2000);
+    });
 }
