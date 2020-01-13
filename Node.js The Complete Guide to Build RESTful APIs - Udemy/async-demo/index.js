@@ -1,12 +1,27 @@
 console.log('before');
-getUser(1)
-    .then(user => getRepo(user.username))
-    .then(repo => getCommits(repo))
-    .then(commit => {
+// getUser(1)
+//     .then(user => getRepo(user.username))
+//     .then(repo => getCommits(repo))
+//     .then(commit => {
+//         commit.forEach((comm, index) => {
+//             console.log(`Commit ${index+1}:`, comm)
+//         });
+//     });
+
+async function displayCommits() {
+    try {
+        const user = await getUser(1);
+        const repo = await getRepo(user.username);
+        const commit = await getCommits(repo);
         commit.forEach((comm, index) => {
-            console.log(`Commit ${index+1}:`, comm)
+            console.log(`Commit ${index+1}:`, comm);
         });
-    });
+    } catch (err) {
+        console.log(err);
+    }
+}
+displayCommits();
+
 console.log('after');
 
 function getUser(id) {
@@ -26,6 +41,7 @@ function getRepo(username) {
         setTimeout(() => {
             console.log(`get repositories from: ${username}`);
             resolve(['Repo1', 'Repo2', 'Repo3']);
+            // reject(new Error('Cant get repos'));
         }, 2000);
     });
 }
