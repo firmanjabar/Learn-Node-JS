@@ -1,4 +1,6 @@
 const config = require('config');
+const sDebug = require('debug')('app:stratup');
+const dDebug = require('debug')('app:db');
 const express = require('express');
 const helmet = require('helmet');
 const Joi = require('joi');
@@ -19,8 +21,13 @@ app.use(helmet());
 
 if (app.get('env') === 'development') {
     app.use(morgan('tiny'));
-    console.log('morgan enabled');
+    sDebug('morgan enabled');
 }
+
+dDebug('database debugger');
+//to call in cmd: set DEBUG=app:startup for single
+//to call in cmd: set DEBUG=app:startup,app:db for multiple
+//to call in cmd: set DEBUG=app:* for all
 
 console.log(`name: ${config.get('name')}`)
 console.log(`server: ${config.get('mail.host')}`)
