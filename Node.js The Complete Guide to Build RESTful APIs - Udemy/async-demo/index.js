@@ -1,20 +1,13 @@
 console.log('before');
-getUser(1, getRepos);
+getUser(1)
+    .then(user => getRepo(user.username))
+    .then(repo => getCommits(repo))
+    .then(commit => {
+        commit.forEach((comm, index) => {
+            console.log(`Commit ${index+1}:`, comm)
+        });
+    });
 console.log('after');
-
-function getRepos(user) {
-    console.log('User', user);
-    getRepo(user.username, getComm);
-}
-
-function getComm(repo) {
-    console.log('Repositories:', repo);
-    getCommits(repo, displayCommits);
-}
-
-function displayCommits(commit) {
-    console.log('Commits:', commit);
-}
 
 function getUser(id) {
     return new Promise((resolve, reject) => {
@@ -41,7 +34,7 @@ function getCommits(repo) {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
             console.log(`get commit from: ${repo[0]}`);
-            resolve(['Commit1', 'Commit2', 'Commit3']);
+            resolve(['initial commit', 'add feature login', 'final production']);
         }, 2000);
     });
 }
