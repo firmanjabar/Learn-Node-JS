@@ -37,31 +37,14 @@ async function createCourse() {
 
 async function getCourses() {
     const courses = await Course
-        // .find({
-        //     author: 'Firman Abdul Jabar',
-        //     isPublish: true
-        // })
-
-        //REGEX
-        //starts with Firman
         .find({
-            author: /^Firman/
-        })
-        //end with Jabar
-        .find({
-            author: /Jabar$/
-        })
-        //contain "Abdul" and add "i" for case insensitif
-        .find({
-            author: /.*Abdul.*/i
+            author: 'Firman Abdul Jabar',
+            isPublish: true
         })
         .limit(10).sort({
             name: 1
         })
-        .select({
-            name: 1,
-            tags: 1
-        })
+        .count()
     console.log(courses);
 }
 
