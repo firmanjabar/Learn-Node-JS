@@ -21,10 +21,10 @@ const courseSchema = new mongoose.Schema({
     isPublish: Boolean
 });
 
-// const Course = mongoose.model('Course', courseSchema);
-// const course = new Course({
-//     name: 'NodeJS Tutorial',
-//     author: 'Firman Abdul Jabar',
-//     tags: ['backend', 'frontend', 'sst'],
-//     isPublish: true
-// })
+const Course = mongoose.model('Course', courseSchema);
+const course = new Course({
+    name: 'NodeJS Tutorial',
+    author: 'Firman Abdul Jabar',
+    tags: ['backend', 'frontend', 'sst'],
+    isPublish: true
+})
