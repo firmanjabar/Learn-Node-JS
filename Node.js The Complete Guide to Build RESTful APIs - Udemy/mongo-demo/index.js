@@ -36,43 +36,24 @@ async function createCourse() {
 }
 
 async function getCourses() {
-    //operator for queries:
-    //eq = equal
-    //ne = not equal
-    //gt = greater than
-    //gte = greater than or equal
-    //lt = less than
-    //lte = less than or equal
-    //in = digunkan untuk mencari beberapa data misal: harga $10,$20 dan $30
-    //nin = not in
+    //logical operator for queries:
+    //or & and
     const courses = await Course
         // .find({
         //     author: 'Firman Abdul Jabar',
         //     isPublish: true
         // })
-
-        //mencari harga lebih dari sama dengan $10
-        .find({
-            price: {
-                $gte: 10
+        .find()
+        // mengambil data minimal ada author firman atau publish is true.
+        // untuk menggunakan logical operator gunakan array
+        // ganti or dengan and, jika ingin menggunakan logika and
+        .or([{
+                author: 'Firman Abdul Jabar'
+            },
+            {
+                isPublish: true
             }
-        })
-
-        //mencari harga $10 s.d. $30
-        .find({
-            price: {
-                $gte: 10,
-                $lte: 30
-            }
-        })
-
-        //in = digunkan untuk mencari beberapa data misal: harga $10,$20 dan $30
-        .find({
-            price: {
-                $in: [10, 20, 30]
-            }
-        })
-
+        ])
         .limit(10).sort({
             name: 1
         })
