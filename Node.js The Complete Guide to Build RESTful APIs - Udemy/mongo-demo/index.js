@@ -36,24 +36,25 @@ async function createCourse() {
 }
 
 async function getCourses() {
-    //logical operator for queries:
-    //or & and
     const courses = await Course
         // .find({
         //     author: 'Firman Abdul Jabar',
         //     isPublish: true
         // })
-        .find()
-        // mengambil data minimal ada author firman atau publish is true.
-        // untuk menggunakan logical operator gunakan array
-        // ganti or dengan and, jika ingin menggunakan logika and
-        .or([{
-                author: 'Firman Abdul Jabar'
-            },
-            {
-                isPublish: true
-            }
-        ])
+
+        //REGEX
+        //starts with Firman
+        .find({
+            author: /^Firman/
+        })
+        //end with Jabar
+        .find({
+            author: /Jabar$/
+        })
+        //contain "Abdul" and add "i" for case insensitif
+        .find({
+            author: /.*Abdul.*/i
+        })
         .limit(10).sort({
             name: 1
         })
