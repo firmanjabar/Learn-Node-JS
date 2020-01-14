@@ -10,16 +10,16 @@ mongoose.connect('mongodb://localhost/playground', {
         console.error('Cant connect to mongodb', err)
     });
 
-// const courseSchema = new mongoose.Schema({
-//     name: String,
-//     author: String,
-//     tags: [String],
-//     date: {
-//         type: Date,
-//         default: Date.now
-//     },
-//     isPublish: Boolean
-// });
+const courseSchema = new mongoose.Schema({
+    name: String,
+    author: String,
+    tags: [String],
+    date: {
+        type: Date,
+        default: Date.now
+    },
+    isPublish: Boolean
+});
 
 // const Course = mongoose.model('Course', courseSchema);
 // const course = new Course({
