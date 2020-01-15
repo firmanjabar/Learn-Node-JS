@@ -49,14 +49,15 @@ async function getCourses() {
 }
 
 async function getUpdateCourse(id) {
-    const course = await Course.findById(id);
-    course.set({
-        name: 'ReactJS Tutorial',
-        author: 'Carson Fanicos'
+    const course = await Course.findByIdAndUpdate(id, {
+        $set: {
+            author: 'Carson Fanicos',
+            isPublish: true
+        }
+    }, {
+        new: true
     });
-
-    const result = await course.save();
-    console.log(result);
+    console.log(course);
 }
 
 getUpdateCourse('5e1d1bd01c9a825968fa64fa');
