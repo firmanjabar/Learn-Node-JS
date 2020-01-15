@@ -12,7 +12,10 @@ mongoose.connect('mongodb://localhost/playground', {
     });
 
 const courseSchema = new mongoose.Schema({
-    name: String,
+    name: {
+        type: String,
+        required: true
+    },
     author: String,
     tags: [String],
     date: {
@@ -26,14 +29,18 @@ const Course = mongoose.model('Course', courseSchema);
 
 async function createCourse() {
     const course = new Course({
-        name: 'ReactJS Tutorial',
+        // name: 'ReactJS Tutorial',
         author: 'Carson Fanicos',
         tags: ['frontend', 'spa'],
         isPublish: true
     })
 
-    const result = await course.save();
-    console.log(result);
+    try {
+        const result = await course.save();
+        console.log(result);
+    } catch (err) {
+        console.log(err.message);
+    }
 }
 
 async function getCourses() {
@@ -66,5 +73,5 @@ async function removeCourse(id) {
     console.log(course);
 }
 
-// createCourse();
-removeCourse('5e1eb3496972bb0a5c85cdeb');
+createCourse();
+// removeCourse('5e1eb3496972bb0a5c85cdeb');
