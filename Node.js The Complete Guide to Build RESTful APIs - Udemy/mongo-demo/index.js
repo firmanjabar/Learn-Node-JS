@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/playground', {
         useUnifiedTopology: true,
-        useNewUrlParser: true
+        useNewUrlParser: true,
+        useFindAndModify: false,
     })
     .then(() => {
         console.log('connected to mongodb')
@@ -25,9 +26,9 @@ const Course = mongoose.model('Course', courseSchema);
 
 async function createCourse() {
     const course = new Course({
-        name: 'NodeJS Tutorial',
-        author: 'Firman Abdul Jabar',
-        tags: ['backend', 'ssr'],
+        name: 'ReactJS Tutorial',
+        author: 'Carson Fanicos',
+        tags: ['frontend', 'spa'],
         isPublish: true
     })
 
@@ -60,4 +61,10 @@ async function getUpdateCourse(id) {
     console.log(course);
 }
 
-getUpdateCourse('5e1d1bd01c9a825968fa64fa');
+async function removeCourse(id) {
+    const course = await Course.findByIdAndRemove(id);
+    console.log(course);
+}
+
+// createCourse();
+removeCourse('5e1eb3496972bb0a5c85cdeb');
