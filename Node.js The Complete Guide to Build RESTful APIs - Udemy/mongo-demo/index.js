@@ -26,7 +26,15 @@ const courseSchema = new mongoose.Schema({
     enum: ["web", "android", "networking"]
   },
   author: String,
-  tags: [String],
+  tags: {
+    type: Array,
+    validate: {
+      validator: function(v) {
+        return v && v.length > 0;
+      },
+      message: "A course should have at least one tag!"
+    }
+  },
   date: {
     type: Date,
     default: Date.now
@@ -49,9 +57,9 @@ async function createCourse() {
     name: "Bootstrap Tutorial",
     category: "web",
     author: "Emilia Clarke",
-    tags: ["frontend", "css"],
+    tags: null,
     isPublish: true,
-    price: 102
+    price: 15
   });
 
   try {
