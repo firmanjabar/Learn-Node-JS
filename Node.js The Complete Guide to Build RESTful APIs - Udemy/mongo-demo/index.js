@@ -29,15 +29,8 @@ const courseSchema = new mongoose.Schema({
   tags: {
     type: Array,
     validate: {
-      // (node:4884) DeprecationWarning: Mongoose: the `isAsync` option for custom
-      // validators is deprecated. Make your async validators return a promise instead:
-      // https://mongoosejs.com/docs/validation.html#async-custom-validators
-      isAsync: true,
-      validator: function(v, callback) {
-        setTimeout(() => {
-          const hasil = v && v.length > 0;
-          callback(hasil);
-        }, 6000);
+      validator: function(v) {
+        return v && v.length > 0;
       },
       message: "A course should have at least one tag!"
     }
@@ -62,7 +55,7 @@ const Course = mongoose.model("Course", courseSchema);
 async function createCourse() {
   const course = new Course({
     name: "Bootstrap Tutorial",
-    category: "web",
+    category: "-",
     author: "Emilia Clarke",
     tags: null,
     isPublish: true,
@@ -73,7 +66,9 @@ async function createCourse() {
     const result = await course.save();
     console.log(result);
   } catch (err) {
-    console.log(err.message);
+    for (data in err.errors) {
+      console.log(err.errors[data].message);
+    }
   }
 }
 
