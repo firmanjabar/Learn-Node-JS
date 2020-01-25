@@ -5,7 +5,8 @@ const app = express();
 
 mongoose.connect('mongodb://localhost/vidly', {
         useNewUrlParser: true,
-        useUnifiedTopology: true
+        useUnifiedTopology: true,
+        useFindAndModify: false
     })
     .then(() => console.log('Connected to MongoDB...'))
     .catch(() => console.error('Could not connect to MongoDB...'));
