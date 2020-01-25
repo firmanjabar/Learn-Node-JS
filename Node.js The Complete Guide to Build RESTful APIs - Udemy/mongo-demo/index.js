@@ -29,8 +29,15 @@ const courseSchema = new mongoose.Schema({
   tags: {
     type: Array,
     validate: {
-      validator: function(v) {
-        return v && v.length > 0;
+      // (node:4884) DeprecationWarning: Mongoose: the `isAsync` option for custom
+      // validators is deprecated. Make your async validators return a promise instead:
+      // https://mongoosejs.com/docs/validation.html#async-custom-validators
+      isAsync: true,
+      validator: function(v, callback) {
+        setTimeout(() => {
+          const hasil = v && v.length > 0;
+          callback(hasil);
+        }, 6000);
       },
       message: "A course should have at least one tag!"
     }
