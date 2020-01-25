@@ -23,7 +23,12 @@ const courseSchema = new mongoose.Schema({
   category: {
     type: String,
     required: true,
-    enum: ["web", "android", "networking"]
+    enum: ["web", "android", "networking"],
+    //properti yang mungkin berguna untuk tipe string
+    //trim untuk menghapus spasi di depan atau belakang kata
+    lowercase: true,
+    // uppercase: true,
+    trim: true
   },
   author: String,
   tags: {
@@ -46,7 +51,9 @@ const courseSchema = new mongoose.Schema({
       return this.isPublish;
     },
     min: 10,
-    max: 100
+    max: 100,
+    get: v => Math.round(v),
+    set: v => Math.round(v)
   }
 });
 
@@ -54,12 +61,12 @@ const Course = mongoose.model("Course", courseSchema);
 
 async function createCourse() {
   const course = new Course({
-    name: "Bootstrap Tutorial",
-    category: "-",
+    name: "Bootstrap Tutorial v.2",
+    category: "WEB",
     author: "Emilia Clarke",
-    tags: null,
+    tags: ["frontend"],
     isPublish: true,
-    price: 15
+    price: 18.6
   });
 
   try {
