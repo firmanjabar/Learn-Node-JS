@@ -39,15 +39,18 @@ async function createCourse(name, author) {
   console.log(result);
 }
 
+// populate() untuk memanggil reference
+// patameter 1: nama properti, parameter 2: spesifik properti dari data ref. "-" for exclude.
 async function listCourses() {
   const courses = await Course
     .find()
-    .select('name');
+    .populate('author', 'name bio -_id')
+    .select('name author');
   console.log(courses);
 }
 
 // createAuthor('Mosh', 'My bio', 'My Website');
 
-createCourse('Node Course', '5e2fa95d023608421c733fc5')
+// createCourse('Node Course', '5e2fa95d023608421c733fc5')
 
-// listCourses();
+listCourses();
