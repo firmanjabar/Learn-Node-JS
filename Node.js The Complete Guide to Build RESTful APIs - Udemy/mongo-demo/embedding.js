@@ -5,10 +5,7 @@ mongoose.connect('mongodb://localhost/playground')
   .catch(err => console.error('Could not connect to MongoDB...', err));
 
 const authorSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true
-  },
+  name: String,
   bio: String,
   website: String
 });
@@ -17,16 +14,13 @@ const Author = mongoose.model('Author', authorSchema);
 
 const Course = mongoose.model('Course', new mongoose.Schema({
   name: String,
-  author: {
-    type: authorSchema,
-    required: true
-  }
+  authors: [authorSchema]
 }));
 
-async function createCourse(name, author) {
+async function createCourse(name, authors) {
   const course = new Course({
     name,
-    author
+    authors
   });
 
   const result = await course.save();
@@ -38,36 +32,31 @@ async function listCourses() {
   console.log(courses);
 }
 
-createCourse('React JS', new Author({
-  name: 'Firman'
-}));
+// createCourse('Node Course', [
+//   new Author({
+//     name: 'Mosh'
+//   }),
+//   new Author({
+//     name: 'Firman'
+//   }),
+// ]);
 
-// async function updateAuthor(courseId) {
-//   const course = await Course.update(courseId);
-//   course.author.name = 'Firman Abdul Jabar';
-//   course.save();
-// }
-
-// async function updateAuthor(courseId) {
-//   const course = await Course.update({
-//     _id: courseId
-//   }, {
-//     $set: {
-//       'author.name': 'Firman'
-//     }
-//   });
-//   console.log(course);
-// }
-
-async function updateAuthor(courseId) {
-  const course = await Course.update({
-    _id: courseId
-  }, {
-    $unset: {
-      'author': ''
-    }
-  });
+async function addAuthor(courseId, author) {
+  const course = await Course.findById(courseId);
+  course.authors.push(author);
+  course.save();
   console.log(course);
 }
 
-// updateAuthor('5e2faed19f244b355028b469');
+// addAuthor('5e2fb65fadeb833e688bf3fc', new Author({
+//   name: 'Beck'
+// }))
+
+async function removeAuthor(courseId, authorId) {
+  const course = await Course.findById(courseId);
+  const author = course.authors.id(authorId);
+  author.remove();
+  course.save();
+  console.log(course);
+}
+removeAuthor('5e2fb65fadeb833e688bf3fc', '5e2fb65fadeb833e688bf3fa');
